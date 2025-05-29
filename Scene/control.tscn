@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://cw4mx4nym1p6l"]
+
+[ext_resource type="Script" uid="uid://fsw8v8plpgkl" path="res://Scene/control.gd" id="1_0ve60"]
+[ext_resource type="AudioStream" uid="uid://cu6r55esvy6k3" path="res://AudioClip/TestMidiProjectNoteC4.ogg" id="2_l7dqm"]
+[ext_resource type="Script" uid="uid://dufr1w5262dsi" path="res://Scene/play_button.gd" id="2_m6dxm"]
+[ext_resource type="Script" uid="uid://b6ob07qxo6i8j" path="res://Scene/switch_button.gd" id="3_4k4du"]
+[ext_resource type="AudioStream" uid="uid://cesbcwq7kcl3h" path="res://AudioClip/TestMidiProjectNoteC5.ogg" id="3_m6dxm"]
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_4k4du"]
+clip_count = 2
+clip_0/name = &"TestC4"
+clip_0/stream = ExtResource("2_l7dqm")
+clip_0/auto_advance = 0
+clip_1/name = &"TestC5"
+clip_1/stream = ExtResource("3_m6dxm")
+clip_1/auto_advance = 0
+_transitions = {
+Vector2i(0, 1): {
+"fade_beats": 1.0,
+"fade_mode": 4,
+"from_time": 1,
+"to_time": 0
+},
+Vector2i(1, 0): {
+"fade_beats": 1.0,
+"fade_mode": 4,
+"from_time": 1,
+"to_time": 0
+}
+}
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0ve60")
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 52.0
+offset_right = 315.0
+offset_bottom = 100.0
+text = "Play!"
+script = ExtResource("2_m6dxm")
+
+[node name="SwitchButton" type="Button" parent="PlayButton"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 73.0
+offset_right = 257.0
+offset_bottom = 120.0
+text = "Switch"
+script = ExtResource("3_4k4du")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamInteractive_4k4du")
+
+[connection signal="pressed" from="PlayButton" to="PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="PlayButton/SwitchButton" to="PlayButton/SwitchButton" method="_on_pressed"]
